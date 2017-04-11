@@ -25,6 +25,7 @@ public:
 Cell *initCellList(char *config);
 void printCellList(Cell *cell);
 Function *createFunctionList(int argc, char *argv[]);
+void printFunctionList(Function *f);
 
 int main(int argc, char *argv[])
 {
@@ -32,11 +33,12 @@ int main(int argc, char *argv[])
 	scanf("%s", config);
 
 	Cell* tmPointer = initCellList(config);
-	printCellList(tmPointer);//DEBUG
+	//printCellList(tmPointer);//DEBUG
 
 	Function *f = createFunctionList(argc, argv);
+	//printFunctionList(f);//DEBUG
 
-	printf("%d", argc);
+
 
 	return 0;
 }
@@ -85,16 +87,16 @@ Function *createFunctionList(int argc, char *argv[]){
 	Function *currentFunction = firstFunction;
 
 	char *fStr = argv[1];//0 1 : 0 1 >
-	currentFunction->next->stateCondition = fStr[0];
-	currentFunction->next->input = fStr[2];
-	currentFunction->next->stateNew = fStr[6];
-	currentFunction->next->output = fStr[8];
-	currentFunction->next->move = fStr[10];
+	currentFunction->stateCondition = fStr[0];
+	currentFunction->input = fStr[2];
+	currentFunction->stateNew = fStr[6];
+	currentFunction->output = fStr[8];
+	currentFunction->move = fStr[10];
 
 	currentFunction->befor = nullptr;
 
 	int index = 1;
-	while(index <= argc){
+	while(index < argc-1){
 		index++;
 		currentFunction->next = new Function();
 		currentFunction->next->befor = currentFunction;
@@ -111,4 +113,18 @@ Function *createFunctionList(int argc, char *argv[]){
 	}
 
 	return firstFunction;
+}
+
+void printFunctionList(Function *f){
+	//go to start:
+	while(f->befor != nullptr)
+		f = f->befor;
+
+	//print
+	while(f != nullptr){
+		printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
+		f = f->next;
+	}
+
+	printf("\n\n");
 }
