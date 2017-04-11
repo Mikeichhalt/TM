@@ -1,14 +1,16 @@
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-class Cell {
-public:
+typedef struct Cell Cell;
+struct Cell {
 	Cell *befor;
 	Cell *next;
 	char value;
 };
 
-class Function {
-public:
+typedef struct Function Function;
+struct Function {
 	Function *befor;
 	Function *next;
 
@@ -56,7 +58,7 @@ int main(int argc, char *argv[])
 	while(state != '$'){
 		Function *currentF = f;
 		while(currentF->stateCondition != state || currentF->input != tmPointer->value){
-			if(currentF->next == nullptr){
+			if(currentF->next == NULL){
 				printf("error: no function found state: %c; input:%c\n", state, tmPointer->value);
 				exit(1);
 			}
@@ -67,19 +69,19 @@ int main(int argc, char *argv[])
 		state = currentF->stateNew;
 		tmPointer->value = currentF->output;
 		if(currentF->move == '<'){
-			if(tmPointer->befor == nullptr){
-				tmPointer->befor = new Cell();
-				tmPointer->befor->befor = nullptr;
+			if(tmPointer->befor == NULL){
+				tmPointer->befor = (struct Cell*) malloc(sizeof(struct Cell));
+				tmPointer->befor->befor = NULL;
 				tmPointer->befor->next = tmPointer;
 				tmPointer->befor->value = '#';
 			}
 			tmPointer = tmPointer->befor;
 		}
 		if(currentF->move == '>'){
-			if(tmPointer->next == nullptr){
-				tmPointer->next = new Cell();
+			if(tmPointer->next == NULL){
+				tmPointer->next = (struct Cell*) malloc(sizeof(struct Cell));
 				tmPointer->next->befor = tmPointer;
-				tmPointer->next->next = nullptr;
+				tmPointer->next->next = NULL;
 				tmPointer->next->value = '#';
 			}
 			tmPointer = tmPointer->next;
@@ -92,17 +94,17 @@ int main(int argc, char *argv[])
 }
 
 Cell *initCellList(char *config){
-	Cell *firstCell = new Cell();
+	Cell *firstCell = (struct Cell*) malloc(sizeof(struct Cell));
 	Cell *currentCell = firstCell;
 	currentCell->value = config[0];
-	currentCell->befor = nullptr;
+	currentCell->befor = NULL;
 
 	int index = 0;
 	while(config[index+1] != '\0'){
 		index++;
-		currentCell->next = new Cell();
+		currentCell->next = (struct Cell*) malloc(sizeof(struct Cell));
 		currentCell->next->befor = currentCell;
-		currentCell->next->next = nullptr;
+		currentCell->next->next = NULL;
 		currentCell->next->value = config[index];
 		currentCell = currentCell->next;
 	}
@@ -113,11 +115,11 @@ void printCellList(Cell *cell, bool showCurrent){
 	Cell *c = cell;
 
 	//go to start:
-	while(c->befor != nullptr)
+	while(c->befor != NULL)
 		c = c->befor;
 
 	//print
-	while(c != nullptr){
+	while(c != NULL){
 		if(showCurrent && c == cell)
 			printf("[");
 		printf("%c", c->value);
@@ -131,7 +133,7 @@ void printCellList(Cell *cell, bool showCurrent){
 }
 
 Function *createFunctionList(int argc, char *argv[]){
-	Function *firstFunction = new Function();
+	Function *firstFunction = (struct Function*) malloc(sizeof(struct Function));
 	Function *currentFunction = firstFunction;
 
 	char *fStr = argv[1];//0 1 : 0 1 >
@@ -141,14 +143,14 @@ Function *createFunctionList(int argc, char *argv[]){
 	currentFunction->output = fStr[8];
 	currentFunction->move = fStr[10];
 
-	currentFunction->befor = nullptr;
+	currentFunction->befor = NULL;
 
 	int index = 1;
 	while(index < argc-1){
 		index++;
-		currentFunction->next = new Function();
+		currentFunction->next = (struct Function*) malloc(sizeof(struct Function));
 		currentFunction->next->befor = currentFunction;
-		currentFunction->next->next = nullptr;
+		currentFunction->next->next = NULL;
 
 		char *fStr = argv[index];//0 1 : 0 1 >
 		currentFunction->next->stateCondition = fStr[0];
@@ -165,11 +167,11 @@ Function *createFunctionList(int argc, char *argv[]){
 
 void printFunctionList(Function *f){
 	//go to start:
-	while(f->befor != nullptr)
+	while(f->befor != NULL)
 		f = f->befor;
 
 	//print
-	while(f != nullptr){
+	while(f != NULL){
 		printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
 		f = f->next;
 	}
