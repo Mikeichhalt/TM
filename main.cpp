@@ -1,8 +1,5 @@
 #include <iostream>
 
-using namespace std;
-
-
 class Cell {
 public:
 	Cell *befor;
@@ -10,18 +7,36 @@ public:
 	char value;
 };
 
+class Function {
+public:
+	Function *befor;
+	Function *next;
+
+	//wenn:
+	char stateCondition;
+	char input;
+
+	//dann:
+	char stateNew;
+	char output;
+	char move;
+};
+
 Cell *initCellList(char *config);
 void printCellList(Cell *cell);
+Function *createFunctionList(int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {
-	printf("start\n");
 	char config [100];
 	scanf("%s", config);
-	printf("start with config: %s\n", config);
 
 	Cell* tmPointer = initCellList(config);
-	printCellList(tmPointer);
+	printCellList(tmPointer);//DEBUG
+
+	Function *f = createFunctionList(argc, argv);
+
+	printf("%d", argc);
 
 	return 0;
 }
@@ -63,4 +78,37 @@ void printCellList(Cell *cell){
 	}
 
 	printf("\n\n");
+}
+
+Function *createFunctionList(int argc, char *argv[]){
+	Function *firstFunction = new Function();
+	Function *currentFunction = firstFunction;
+
+	char *fStr = argv[1];//0 1 : 0 1 >
+	currentFunction->next->stateCondition = fStr[0];
+	currentFunction->next->input = fStr[2];
+	currentFunction->next->stateNew = fStr[6];
+	currentFunction->next->output = fStr[8];
+	currentFunction->next->move = fStr[10];
+
+	currentFunction->befor = nullptr;
+
+	int index = 1;
+	while(index <= argc){
+		index++;
+		currentFunction->next = new Function();
+		currentFunction->next->befor = currentFunction;
+		currentFunction->next->next = nullptr;
+
+		char *fStr = argv[index];//0 1 : 0 1 >
+		currentFunction->next->stateCondition = fStr[0];
+		currentFunction->next->input = fStr[2];
+		currentFunction->next->stateNew = fStr[6];
+		currentFunction->next->output = fStr[8];
+		currentFunction->next->move = fStr[10];
+
+		currentFunction = currentFunction->next;
+	}
+
+	return firstFunction;
 }
