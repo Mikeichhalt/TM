@@ -30,10 +30,15 @@ void printFunctionList(Function *f);
 /**
  * start state: 0
  * end state: $
+ *
  * function: S C : S' Y d
  * example:  0 1 : 0 1 >
- * rechts: >
- * links: <
+ *
+ * input, output, state: char
+ * d:
+ *   rechts: >
+ *   links: <
+ *   stehen bleiben: _
  */
 int main(int argc, char *argv[])
 {
