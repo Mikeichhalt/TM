@@ -11,36 +11,56 @@ public:
 };
 
 Cell *initCellList(char *config);
+void printCellList(Cell *cell);
 
 int main(int argc, char *argv[])
 {
-	cout << "Hello World!" << endl;
-
 	printf("start\n");
 	char config [100];
 	scanf("%s", config);
-	printf("start with config:%s\n", config);
+	printf("start with config: %s\n", config);
 
-	Cell* currentCell = initCellList(config);
-
-
+	Cell* tmPointer = initCellList(config);
+	printCellList(tmPointer);
 
 	return 0;
 }
 
 Cell *initCellList(char *config){
-	int index = 0;
-	Cell *first = new Cell();
-	Cell *currentCell = first;
+	Cell *firstCell = new Cell();
+	Cell *currentCell = firstCell;
+	currentCell->value = config[0];
+	currentCell->befor = nullptr;
 
-	while(config[index] != '\0'){
-		currentCell->value = config[index];
-		currentCell->befor = nullptr;
+	int index = 0;
+	while(config[index+1] != '\0'){
+		index++;
 		currentCell->next = new Cell();
 		currentCell->next->befor = currentCell;
 		currentCell->next->next = nullptr;
+		currentCell->next->value = config[index];
 		currentCell = currentCell->next;
-		index++;
 	}
-	return nullptr;
+	return firstCell;
+}
+
+void printCellList(Cell *cell){
+	Cell *c = cell;
+
+	//go to start:
+	while(c->befor != nullptr)
+		c = c->befor;
+
+	//print
+	while(c != nullptr){
+		if(c == cell)
+			printf("[");
+		printf("%c", c->value);
+		if(c == cell)
+			printf("]");
+
+		c = c->next;
+	}
+
+	printf("\n\n");
 }
