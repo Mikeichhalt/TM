@@ -31,7 +31,7 @@ void printFunctionList(Function *f);
  * start state: 0
  * end state: $
  *
- * function: S C : S' Y d
+ * function: S X : S' Y d
  * example:  0 1 : 0 1 >
  *
  * input, output, state: char
