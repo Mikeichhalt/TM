@@ -27,6 +27,14 @@ void printCellList(Cell *cell, bool showCurrent);
 Function *createFunctionList(int argc, char *argv[]);
 void printFunctionList(Function *f);
 
+/**
+ * start state: 0
+ * end state: $
+ * function: S C : S' Y d
+ * example:  0 1 : 0 1 >
+ * rechts: >
+ * links: <
+ */
 int main(int argc, char *argv[])
 {
 	char config [100];
