@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
 	while(state != '$'){
 		Function *currentF = f;
-		while(currentF->stateCondition != state && currentF->input != tmPointer->value){
+		while(currentF->stateCondition != state || currentF->input != tmPointer->value){
 			if(currentF->next == nullptr){
 				printf("error: no function found state: %c; input:%c\n", state, tmPointer->value);
 				exit(1);
