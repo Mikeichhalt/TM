@@ -14,11 +14,11 @@ struct Function {
 	Function *befor;
 	Function *next;
 
-	//wenn:
+	//if:
 	char stateCondition;
 	char input;
 
-	//dann:
+	//then:
 	char stateNew;
 	char output;
 	char move;
@@ -38,9 +38,9 @@ void printFunctionList(Function *f);
  *
  * input, output, state: char
  * d:
- *   rechts: >
- *   links: <
- *   stehen bleiben: _
+ *   right: >
+ *   left: <
+ *   stay: _
  */
 int main(int argc, char *argv[])
 {
