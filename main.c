@@ -128,8 +128,6 @@ void printCellList(Cell *cell, bool showCurrent){
 
 		c = c->next;
 	}
-
-	printf("\n\n");
 }
 
 Function *createFunctionList(int argc, char *argv[]){
@@ -175,6 +173,4 @@ void printFunctionList(Function *f){
 		printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
 		f = f->next;
 	}
-
-	printf("\n\n");
 }
