@@ -23,7 +23,7 @@ public:
 };
 
 Cell *initCellList(char *config);
-void printCellList(Cell *cell);
+void printCellList(Cell *cell, bool showCurrent);
 Function *createFunctionList(int argc, char *argv[]);
 void printFunctionList(Function *f);
 
@@ -33,12 +33,47 @@ int main(int argc, char *argv[])
 	scanf("%s", config);
 
 	Cell* tmPointer = initCellList(config);
-	//printCellList(tmPointer);//DEBUG
+	//printCellList(tmPointer, true);//DEBUG
 
 	Function *f = createFunctionList(argc, argv);
 	//printFunctionList(f);//DEBUG
 
+	char state = '0';
 
+	while(state != '$'){
+		Function *currentF = f;
+		while(currentF->stateCondition != state && currentF->input != tmPointer->value){
+			if(currentF->next == nullptr){
+				printf("error: no function found state: %c; input:%c\n", state, tmPointer->value);
+				exit(1);
+			}
+			currentF = currentF->next;
+		}
+
+		//use currentF
+		state = currentF->stateNew;
+		tmPointer->value = currentF->output;
+		if(currentF->move == '<'){
+			if(tmPointer->befor == nullptr){
+				tmPointer->befor = new Cell();
+				tmPointer->befor->befor = nullptr;
+				tmPointer->befor->next = tmPointer;
+				tmPointer->befor->value = '#';
+			}
+			tmPointer = tmPointer->befor;
+		}
+		if(currentF->move == '>'){
+			if(tmPointer->next == nullptr){
+				tmPointer->next = new Cell();
+				tmPointer->next->befor = tmPointer;
+				tmPointer->next->next = nullptr;
+				tmPointer->next->value = '#';
+			}
+			tmPointer = tmPointer->next;
+		}
+	}
+
+	printCellList(tmPointer, false);
 
 	return 0;
 }
@@ -61,7 +96,7 @@ Cell *initCellList(char *config){
 	return firstCell;
 }
 
-void printCellList(Cell *cell){
+void printCellList(Cell *cell, bool showCurrent){
 	Cell *c = cell;
 
 	//go to start:
@@ -70,10 +105,10 @@ void printCellList(Cell *cell){
 
 	//print
 	while(c != nullptr){
-		if(c == cell)
+		if(showCurrent && c == cell)
 			printf("[");
 		printf("%c", c->value);
-		if(c == cell)
+		if(showCurrent && c == cell)
 			printf("]");
 
 		c = c->next;
