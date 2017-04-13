@@ -1,6 +1,6 @@
 #!/bin/bash
 #input example for 5+3: .....+...
-../build-buk1_TM-Desktop_Qt_5_8_0_GCC_64bit-Debug/buk1_TM \
+./buk1_TM \
 "0 . : 0 . >" \
 "0 + : r # >" \
 \

@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
 	}
 
 	printCellList(tmPointer, false);
+	printf("\n");
 
 	return 0;
 }
