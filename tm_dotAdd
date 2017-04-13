@@ -1,0 +1,12 @@
+#!/bin/bash
+#.....+...  #5+3
+../build-buk1_TM-Desktop_Qt_5_8_0_GCC_64bit-Debug/buk1_TM \
+"0 . : 0 . >" \
+"0 + : r # >" \
+\
+"r . : r # <" \
+"r # : R . >" \
+\
+"R # : c # >" \
+"c # : $ # _" \
+"c . : r . _"
