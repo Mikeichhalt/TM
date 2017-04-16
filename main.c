@@ -37,6 +37,7 @@ Function *createFunctionList(int argc, char *argv[]);
 void printFunction(Function *f);
 void printFunctionList(Function *f);
 void trimCellList(Cell **c);
+char *inputString(FILE* fp, size_t startSize);
 
 /**
  * start state: 0
@@ -53,10 +54,10 @@ void trimCellList(Cell **c);
  */
 int main(int argc, char *argv[])
 {
-	char config [100];
-	scanf("%s", config);
-
+	char *config = inputString(stdin, 10);
 	Cell* tmPointer = initCellList(config);
+	free(config);
+
 	Function *f = createFunctionList(argc, argv);
 
 	char state = TM_STARTSTATE;
@@ -253,4 +254,25 @@ void trimCellList(Cell **c){
 		cell = cell->befor;
 
 	*c = cell;
+}
+
+char *inputString(FILE* fp, size_t startSize){
+	int ch;
+	size_t len = 0;
+
+	char *str = realloc(NULL, sizeof(char) * startSize);
+	if(!str)
+		return str;
+
+	while(EOF != (ch = fgetc(fp)) && ch != '\n'){
+		str[len++] = ch;
+		if(len == startSize){
+			str = realloc(str, sizeof(char) * (startSize += 16));
+			if(!str)
+				return str;
+		}
+	}
+	str[len++] = '\0';
+
+	return realloc(str, sizeof(char) * len);
 }
