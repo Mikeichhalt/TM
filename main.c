@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 		Function *currentF = f;
 		while(currentF->stateCondition != state || currentF->input != tmPointer->value){
 			if(currentF->next == NULL){
-				printf("error: no function found state: %c; input:%c\n", state, tmPointer->value);
+				fprintf(stderr, "no function found; state: %c; input:%c\n", state, tmPointer->value);
 				exit(1);
 			}
 			currentF = currentF->next;
