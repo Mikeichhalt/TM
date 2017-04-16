@@ -6,6 +6,9 @@
 #define TM_STOPSTATE '$'
 #define TM_STARTSTATE '0'
 
+#define TRIM_OUTPUT
+#define TM_DEBUG
+
 typedef struct Cell Cell;
 struct Cell {
 	Cell *befor;
@@ -31,6 +34,7 @@ struct Function {
 Cell *initCellList(char *config);
 void printCellList(Cell *cell, bool showCurrent);
 Function *createFunctionList(int argc, char *argv[]);
+void printFunction(Function *f);
 void printFunctionList(Function *f);
 void trimCellList(Cell **c);
 
@@ -53,12 +57,13 @@ int main(int argc, char *argv[])
 	scanf("%s", config);
 
 	Cell* tmPointer = initCellList(config);
-	//printCellList(tmPointer, true);//DEBUG
-
 	Function *f = createFunctionList(argc, argv);
-	//printFunctionList(f);//DEBUG
 
 	char state = TM_STARTSTATE;
+
+#ifdef TM_DEBUG
+	printCellList(tmPointer, true);
+#endif
 
 	while(state != TM_STOPSTATE){
 		Function *currentF = f;
@@ -91,11 +96,17 @@ int main(int argc, char *argv[])
 			}
 			tmPointer = tmPointer->next;
 		}
+
+#ifdef TM_DEBUG
+		printFunction(currentF);
+		printCellList(tmPointer, true);
+#endif
 	}
 
+#ifdef TRIM_OUTPUT
 	trimCellList(&tmPointer);
+#endif
 	printCellList(tmPointer, false);
-	printf("\n");
 
 	return 0;
 }
@@ -136,6 +147,8 @@ void printCellList(Cell *cell, bool showCurrent){
 
 		c = c->next;
 	}
+
+	printf("\n");
 }
 
 Function *createFunctionList(int argc, char *argv[]){
@@ -171,6 +184,10 @@ Function *createFunctionList(int argc, char *argv[]){
 	return firstFunction;
 }
 
+void printFunction(Function *f){
+	printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
+}
+
 void printFunctionList(Function *f){
 	//go to start:
 	while(f->befor != NULL)
@@ -178,7 +195,7 @@ void printFunctionList(Function *f){
 
 	//print
 	while(f != NULL){
-		printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
+		printFunction(f);
 		f = f->next;
 	}
 }

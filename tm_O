@@ -1,0 +1,34 @@
+#!/bin/bash
+#finds the amount of easter eggs 'O'
+#Alphabet: O, @, a, b, c, 0, 1
+#input example: 10abOc10b1O1a0c1b0O1a0c1b00a
+#output: @@@
+
+#state:
+#0: a, b, c, 0, 1 --> _
+#1: search O
+#2: go befor all @ and place new @
+#3: remove all _
+./buk1_TM \
+"0 a : 0 _ >" \
+"0 b : 0 _ >" \
+"0 c : 0 _ >" \
+"0 0 : 0 _ >" \
+"0 1 : 0 _ >" \
+\
+"0 O : 0 O >" \
+"0 _ : 0 _ >" \
+"0 @ : 0 @ >" \
+"0 # : 1 # <" \
+\
+"1 _ : 1 _ <" \
+"1 O : 2 _ <" \
+"1 @ : 3 @ >" \
+\
+"2 _ : 2 _ <" \
+"2 O : 2 O <" \
+"2 @ : 2 @ <" \
+"2 # : 0 @ >" \
+\
+"3 _ : 3 # >" \
+"3 # : $ # _"

@@ -5,7 +5,10 @@ CONFIG -= qt
 
 SOURCES += main.c
 
-DISTFILES += tm_dotAdd tm_plus1
+DISTFILES += tm_dotAdd \
+	tm_plus1 \
+	tm_O \
+	tm_nothing
 
 copydata.commands = $(COPY) $$PWD/tm_* $$OUT_PWD
 first.depends = $(first) copydata
