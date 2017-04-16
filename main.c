@@ -32,7 +32,7 @@ struct Function {
 };
 
 Cell *initCellList(char *config);
-void printCellList(Cell *cell, bool showCurrent);
+int printCellList(Cell *cell);
 Function *createFunctionList(int argc, char *argv[]);
 void printFunction(Function *f);
 void printFunctionList(Function *f);
@@ -61,10 +61,6 @@ int main(int argc, char *argv[])
 
 	char state = TM_STARTSTATE;
 
-#ifdef TM_DEBUG
-	printCellList(tmPointer, true);
-#endif
-
 	while(state != TM_STOPSTATE){
 		Function *currentF = f;
 		while(currentF->stateCondition != state || currentF->input != tmPointer->value){
@@ -74,6 +70,18 @@ int main(int argc, char *argv[])
 			}
 			currentF = currentF->next;
 		}
+
+#ifdef TM_DEBUG
+		int currentPosition = printCellList(tmPointer);
+		printf("\t");
+		printFunction(currentF);
+		printf("\n");
+
+		//print current pointer
+		for(int i = 0; i < currentPosition; i++)
+			printf(" ");
+		printf("^\n");
+#endif
 
 		//use currentF
 		state = currentF->stateNew;
@@ -96,22 +104,23 @@ int main(int argc, char *argv[])
 			}
 			tmPointer = tmPointer->next;
 		}
-
-#ifdef TM_DEBUG
-		printf("\t");
-		printFunction(currentF);
-		printf("\n");
-		printCellList(tmPointer, true);
-#endif
 	}
 
-#ifndef TM_DEBUG
+#ifdef TM_DEBUG
+	int currentPosition = printCellList(tmPointer);
+	printf("\n");
+
+	//print current pointer
+	for(int i = 0; i < currentPosition; i++)
+		printf(" ");
+	printf("^\n");
+#else
 # ifdef TRIM_OUTPUT
 	trimCellList(&tmPointer);
 # endif
-	printCellList(tmPointer, false);
-#endif
+	printCellList(tmPointer);
 	printf("\n");
+#endif
 
 	return 0;
 }
@@ -135,7 +144,7 @@ Cell *initCellList(char *config){
 	return firstCell;
 }
 
-void printCellList(Cell *cell, bool showCurrent){
+int printCellList(Cell *cell){
 	Cell *c = cell;
 
 	//go to start:
@@ -143,27 +152,19 @@ void printCellList(Cell *cell, bool showCurrent){
 		c = c->befor;
 
 	//print
-	if(showCurrent && c == cell)
-		printf("[");
-	else
-		printf(" ");
-
+	int currentCounter = 0;
+	bool currentFound = false;
 	while(c != NULL){
+		if(!currentFound && c != cell){
+			currentCounter++;
+		}else
+			currentFound = true;
+
 		printf("%c", c->value);
-
-		if(showCurrent){
-			if(c == cell)
-				printf("]");
-			else{
-				if(c->next == cell)
-					printf("[");
-				else
-					printf(" ");
-			}
-		}
-
 		c = c->next;
 	}
+
+	return currentCounter;
 }
 
 Function *createFunctionList(int argc, char *argv[]){
@@ -200,7 +201,7 @@ Function *createFunctionList(int argc, char *argv[]){
 }
 
 void printFunction(Function *f){
-	printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
+	printf("%c %c : %c %c %c", f->stateCondition, f->input, f->stateNew, f->output, f->move);
 }
 
 void printFunctionList(Function *f){
