@@ -143,12 +143,24 @@ void printCellList(Cell *cell, bool showCurrent){
 		c = c->befor;
 
 	//print
+	if(showCurrent && c == cell)
+		printf("[");
+	else
+		printf(" ");
+
 	while(c != NULL){
-		if(showCurrent && c == cell)
-			printf("[");
 		printf("%c", c->value);
-		if(showCurrent && c == cell)
-			printf("]");
+
+		if(showCurrent){
+			if(c == cell)
+				printf("]");
+			else{
+				if(c->next == cell)
+					printf("[");
+				else
+					printf(" ");
+			}
+		}
 
 		c = c->next;
 	}
