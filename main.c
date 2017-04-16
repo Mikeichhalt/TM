@@ -7,7 +7,7 @@
 #define TM_STARTSTATE '0'
 
 #define TRIM_OUTPUT
-#define TM_DEBUG
+//#define TM_DEBUG
 
 typedef struct Cell Cell;
 struct Cell {
@@ -98,15 +98,20 @@ int main(int argc, char *argv[])
 		}
 
 #ifdef TM_DEBUG
+		printf("\t");
 		printFunction(currentF);
+		printf("\n");
 		printCellList(tmPointer, true);
 #endif
 	}
 
-#ifdef TRIM_OUTPUT
+#ifndef TM_DEBUG
+# ifdef TRIM_OUTPUT
 	trimCellList(&tmPointer);
-#endif
+# endif
 	printCellList(tmPointer, false);
+#endif
+	printf("\n");
 
 	return 0;
 }
@@ -147,8 +152,6 @@ void printCellList(Cell *cell, bool showCurrent){
 
 		c = c->next;
 	}
-
-	printf("\n");
 }
 
 Function *createFunctionList(int argc, char *argv[]){
