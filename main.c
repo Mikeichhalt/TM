@@ -248,5 +248,9 @@ void trimCellList(Cell **c){
 		cell->next = NULL;
 	}
 
+	//go to start:
+	while(cell->befor != NULL)
+		cell = cell->befor;
+
 	*c = cell;
 }
