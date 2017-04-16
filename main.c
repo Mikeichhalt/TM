@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define TM_BLANK '#'
+#define TM_STOPSTATE '$'
+#define TM_STARTSTATE '0'
+
 typedef struct Cell Cell;
 struct Cell {
 	Cell *befor;
@@ -28,6 +32,7 @@ Cell *initCellList(char *config);
 void printCellList(Cell *cell, bool showCurrent);
 Function *createFunctionList(int argc, char *argv[]);
 void printFunctionList(Function *f);
+void trimCellList(Cell **c);
 
 /**
  * start state: 0
@@ -53,9 +58,9 @@ int main(int argc, char *argv[])
 	Function *f = createFunctionList(argc, argv);
 	//printFunctionList(f);//DEBUG
 
-	char state = '0';
+	char state = TM_STARTSTATE;
 
-	while(state != '$'){
+	while(state != TM_STOPSTATE){
 		Function *currentF = f;
 		while(currentF->stateCondition != state || currentF->input != tmPointer->value){
 			if(currentF->next == NULL){
@@ -73,7 +78,7 @@ int main(int argc, char *argv[])
 				tmPointer->befor = (struct Cell*) malloc(sizeof(struct Cell));
 				tmPointer->befor->befor = NULL;
 				tmPointer->befor->next = tmPointer;
-				tmPointer->befor->value = '#';
+				tmPointer->befor->value = TM_BLANK;
 			}
 			tmPointer = tmPointer->befor;
 		}
@@ -82,12 +87,13 @@ int main(int argc, char *argv[])
 				tmPointer->next = (struct Cell*) malloc(sizeof(struct Cell));
 				tmPointer->next->befor = tmPointer;
 				tmPointer->next->next = NULL;
-				tmPointer->next->value = '#';
+				tmPointer->next->value = TM_BLANK;
 			}
 			tmPointer = tmPointer->next;
 		}
 	}
 
+	trimCellList(&tmPointer);
 	printCellList(tmPointer, false);
 	printf("\n");
 
@@ -109,6 +115,7 @@ Cell *initCellList(char *config){
 		currentCell->next->value = config[index];
 		currentCell = currentCell->next;
 	}
+
 	return firstCell;
 }
 
@@ -174,4 +181,39 @@ void printFunctionList(Function *f){
 		printf("%c %c : %c %c %c\n", f->stateCondition, f->input, f->stateNew, f->output, f->move);
 		f = f->next;
 	}
+}
+
+void trimCellList(Cell **c){
+	Cell *cell = *c;
+
+	//go to start:
+	while(cell->befor != NULL)
+		cell = cell->befor;
+
+	//remove blanks at start
+	while(cell->value == TM_BLANK){
+		if(cell->next == NULL){// list is just one blank
+			*c = cell;
+			return;
+		}
+
+		Cell *remCell = cell;
+		cell = cell->next;
+		free(remCell);
+		cell->befor = NULL;
+	}
+
+	//go to end:
+	while(cell->next != NULL)
+		cell = cell->next;
+
+	//remove blanks at end
+	while(cell->value == TM_BLANK){
+		Cell *remCell = cell;
+		cell = cell->befor;
+		free(remCell);
+		cell->next = NULL;
+	}
+
+	*c = cell;
 }
