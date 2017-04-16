@@ -74,9 +74,9 @@ int main(int argc, char *argv[])
 
 #ifdef TM_DEBUG
 		int currentPosition = printCellList(tmPointer);
-		printf("\t");
+		printf("\t  \"");
 		printFunction(currentF);
-		printf("\n");
+		printf("\"\n");
 
 		//print current pointer
 		for(int i = 0; i < currentPosition; i++)
