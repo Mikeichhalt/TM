@@ -11,6 +11,13 @@ DISTFILES += tm_dotAdd \
 	tm_O \
 	tm_nothing
 
+CONFIG(release, debug|release) {
+	DEFINES += TRIM_OUTPUT
+}
+CONFIG(debug, debug|release) {
+	DEFINES += TM_DEBUG
+}
+
 copydata.commands = $(COPY) $$PWD/tm_* $$OUT_PWD
 first.depends = $(first) copydata
 export(first.depends)

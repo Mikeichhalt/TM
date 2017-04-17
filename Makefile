@@ -1,5 +1,15 @@
-tm: main.c
-	gcc main.c -o tm
+CC=gcc
+EXECUTABLE=tm
+SOURCES=main.c
+
+default:
+	$(CC) $(SOURCES) -DTRIM_OUTPUT -o $(EXECUTABLE)
+
+notrim:
+	$(CC) $(SOURCES) -o $(EXECUTABLE)
+
+debug:
+	$(CC) $(SOURCES) -DTM_DEBUG -o $(EXECUTABLE)
 
 clean:
 	rm -f tm
