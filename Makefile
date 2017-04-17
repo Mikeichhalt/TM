@@ -12,4 +12,4 @@ debug:
 	$(CC) $(SOURCES) -DTM_DEBUG -o $(EXECUTABLE)
 
 clean:
-	rm -f tm
+	rm -f $(EXECUTABLE)
