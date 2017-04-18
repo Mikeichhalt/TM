@@ -9,7 +9,8 @@ SOURCES += main.c
 DISTFILES += tm_dotAdd \
 	tm_plus1 \
 	tm_O \
-	tm_nothing
+	tm_nothing \
+    tm_21
 
 CONFIG(release, debug|release) {
 	DEFINES += TRIM_OUTPUT
