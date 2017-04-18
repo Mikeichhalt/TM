@@ -125,9 +125,14 @@ int main(int argc, char *argv[])
 
 Cell *initCellList(char *config){
 	Cell *firstCell = (struct Cell*) malloc(sizeof(struct Cell));
+	firstCell->befor = NULL;
+	if(config[0] == '\0'){
+		firstCell->value = '#';
+		return firstCell;
+	}
+	firstCell->value = config[0];
+
 	Cell *currentCell = firstCell;
-	currentCell->value = config[0];
-	currentCell->befor = NULL;
 
 	int index = 0;
 	while(config[index+1] != '\0'){
