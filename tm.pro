@@ -6,7 +6,7 @@ TARGET = tm
 
 SOURCES += main.c
 
-DISTFILES += tm_dotAdd \
+DISTFILES += \
 	tm_plus1 \
 	tm_O \
 	tm_nothing \
