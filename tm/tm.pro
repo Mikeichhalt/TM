@@ -6,3 +6,6 @@ CONFIG -= qt
 SOURCES += main.c
 
 DESTDIR = $$PWD/../scripts
+
+HEADERS += \
+    tmdefines.h

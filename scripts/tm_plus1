@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #input: binary number
 ./tmr \
 "0 1 : 0 1 >" \

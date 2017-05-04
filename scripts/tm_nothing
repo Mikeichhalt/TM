@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #input = output for binary input
 ./tm \
 "0 0 : $ 0 _" \

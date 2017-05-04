@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #finds the amount of easter eggs 'O'
 #Alphabet: O, @, a, b, c, 0, 1
 #input example: 10abOc10b1O1a0c1b0O1a0c1b00a

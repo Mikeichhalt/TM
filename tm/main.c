@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define TM_BLANK '#'
-#define TM_STOPSTATE '$'
-#define TM_STARTSTATE '0'
+#include "tmdefines.h"
 
 #define TRIM_OUTPUT
 //#define TM_DEBUG
