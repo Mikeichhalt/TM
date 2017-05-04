@@ -15,19 +15,18 @@ int main(int argc, char *argv[])
 	QProcess p;
 	p.setProgram("./tm");
 	p.setArguments(modifiedParams());
-
 	p.setProcessChannelMode(QProcess::ForwardedChannels);
 	p.setInputChannelMode(QProcess::ForwardedInputChannel);
+
 	p.start();
 	p.waitForFinished(-1);
+
 	return p.exitCode();
-	//return QProcess::execute("./tm", modifiedParams());
 }
 
 QStringList modifiedParams(){
 	auto params = QCoreApplication::arguments();
 	params.removeFirst();
-	return params;//TODO fix modifiedParams
 
 	QStringList newParams;
 
