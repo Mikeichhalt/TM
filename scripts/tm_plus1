@@ -1,6 +1,6 @@
 #!/bin/bash
 #input: binary number
-./tm \
+./tmr \
 "0 1 : 0 1 >" \
 "0 0 : 0 0 >" \
 "0 # : 1 # <" \
