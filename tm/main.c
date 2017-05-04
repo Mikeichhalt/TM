@@ -6,6 +6,9 @@
 #define TM_STOPSTATE '$'
 #define TM_STARTSTATE '0'
 
+#define TRIM_OUTPUT
+//#define TM_DEBUG
+
 typedef struct Cell Cell;
 struct Cell {
 	Cell *befor;
