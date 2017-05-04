@@ -5,4 +5,6 @@ DISTFILES += \
     tm_nothing \
     tm_O \
     tm_plus1 \
-    NOT
+    NOT \
+    TRUE \
+    FALSE
