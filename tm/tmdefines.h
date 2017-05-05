@@ -10,5 +10,6 @@
 
 #define TRIM_OUTPUT
 //#define TM_DEBUG
+//#define INOUT_DEBUG
 
 #endif // TMDEFINES_H

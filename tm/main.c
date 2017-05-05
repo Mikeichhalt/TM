@@ -50,6 +50,11 @@ char *inputString(FILE* fp, size_t startSize);
 int main(int argc, char *argv[])
 {
 	char *config = inputString(stdin, 10);
+
+#ifdef INOUT_DEBUG
+	fprintf(stderr, "notErrTmIn:%s %s:%s\n", argv[0], argv[1], config);
+#endif
+
 	Cell* tmPointer = initCellList(config);
 	free(config);
 
@@ -115,7 +120,7 @@ int main(int argc, char *argv[])
 	trimCellList(&tmPointer);
 # endif
 	printCellList(tmPointer);
-	printf("\n");
+	//printf("\n");
 #endif
 
 	return 0;
@@ -152,18 +157,29 @@ int printCellList(Cell *cell){
 	while(c->befor != NULL)
 		c = c->befor;
 
+#ifdef INOUT_DEBUG
+	fprintf(stderr, "notErrTmOut:");
+#endif
+
 	//print
 	int currentCounter = 0;
 	bool currentFound = false;
 	while(c != NULL){
-		if(!currentFound && c != cell){
+		if(!currentFound && c != cell)
 			currentCounter++;
-		}else
+		else
 			currentFound = true;
 
+#ifdef INOUT_DEBUG
+		fprintf(stderr, "%c", c->value);
+#endif
 		printf("%c", c->value);
 		c = c->next;
 	}
+
+#ifdef INOUT_DEBUG
+	fprintf(stderr, "\n");
+#endif
 
 	return currentCounter;
 }
