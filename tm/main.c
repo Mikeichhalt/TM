@@ -4,9 +4,6 @@
 
 #include "tmdefines.h"
 
-#define TRIM_OUTPUT
-//#define TM_DEBUG
-
 typedef struct Cell Cell;
 struct Cell {
 	Cell *befor;
