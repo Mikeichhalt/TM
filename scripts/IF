@@ -1,0 +1,8 @@
+#!/bin/sh
+#input: Tiu
+#if i=1 output: Tu
+#if i=0 output: Ru
+./tm \
+"0 T : 1 # >" \
+"1 0 : $ R _" \
+"1 1 : $ T _"

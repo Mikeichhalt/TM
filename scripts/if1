@@ -1,0 +1,2 @@
+#!/bin/sh
+./IF | ./THEN | ./tm_bplus1 | ./ELSE | ./tm_bminus1 | ./ENDIF

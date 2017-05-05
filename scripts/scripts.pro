@@ -10,4 +10,7 @@ DISTFILES += \
     tm_bplus1 \
     ELSE \
     ENDIF \
-    THEN
+    THEN \
+    IF \
+    tm_bminus1 \
+    if1
