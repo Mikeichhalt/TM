@@ -5,11 +5,16 @@ Build with Qt (https://www.qt.io/ide/)
 Go to `./scripts`
 
 
-### Binary add plus 1
+### Binary add plus 1 (or not)
 ```bash
 echo T111 | ./tm_bplus1
 ```
-returns: T1000
+returns: R1000
+
+```bash
+echo R111 | ./tm_bplus1
+```
+returns: R111
 
 ### IF
 input: Tiu  
